@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KNS — Scale Your Brand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080808;
+    --surface: #111111;
+    --surface2: #181818;
+    --border: rgba(255,255,255,0.07);
+    --white: #f5f5f0;
+    --muted: #888;
+    --accent: #c8f060;
+    --accent-dark: #a8d040;
+    --text: #e8e8e2;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 6%;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--white);
+    letter-spacing: -0.02em;
+  }
+
+  .logo span { color: var(--accent); }
+
+  .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+
+  .btn-nav-ghost {
+    color: var(--muted);
+    font-size: 0.875rem;
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    transition: color 0.2s;
+  }
+
+  .btn-nav-ghost:hover { color: var(--white); }
+
+  .btn-nav {
+    background: var(--accent);
+    color: #111;
+    padding: 0.55rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-nav:hover { background: var(--accent-dark); }
+
+  /* HERO */
+  .hero {
+    padding: 7rem 6% 6rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(200,240,96,0.25);
+    padding: 0.3rem 0.9rem;
+    border-radius: 100px;
+    margin-bottom: 2.25rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+    max-width: 780px;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 0.75rem;
+    font-weight: 300;
+  }
+
+  .hero-note {
+    font-size: 0.875rem;
+    color: #555;
+    max-width: 480px;
+    margin-bottom: 2.75rem;
+    font-style: italic;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #111;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    transition: background 0.2s, transform 0.15s;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+  .btn-wa {
+    background: transparent;
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, transform 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-wa:hover { border-color: rgba(255,255,255,0.25); transform: translateY(-1px); }
+
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 6%;
+  }
+
+  /* PROBLEM */
+  .problem {
+    padding: 5rem 6%;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .problem-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .problem h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .problem-items { display: flex; flex-direction: column; gap: 1rem; }
+
+  .problem-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  .problem-x { color: #ff5555; font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0; }
+
+  .problem-item p { font-size: 0.95rem; color: var(--muted); }
+
+  .problem-fix {
+    margin-top: 1.5rem;
+    padding: 1.25rem 1.5rem;
+    background: rgba(200,240,96,0.06);
+    border: 1px solid rgba(200,240,96,0.2);
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    font-family: 'Syne', sans-serif;
+  }
+
+  /* SERVICES */
+  .services {
+    padding: 5rem 6%;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--white);
+    margin-bottom: 3rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem 1.75rem;
+    transition: border-color 0.25s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .service-card:hover { border-color: rgba(200,240,96,0.25); transform: translateY(-4px); }
+  .service-card:hover::before { opacity: 1; }
+
+  .service-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
+  }
+
+  .service-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
+  }
+
+  .service-arrow { display: inline-block; color: var(--accent); margin-left: 0.4rem; transition: transform 0.2s; }
+  .service-card:hover .service-arrow { transform: translateX(4px); }
+
+  .service-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; }
+
+  /* PORTFOLIO */
+  .portfolio {
+    padding: 5rem 6%;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .portfolio-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.2s;
+  }
+
+  .portfolio-card:hover { border-color: rgba(200,240,96,0.25); transform: translateY(-3px); }
+
+  .portfolio-preview {
+    background: var(--surface2);
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .preview-browser {
+    width: 85%;
+    background: #1c1c1c;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  }
+
+  .browser-bar {
+    background: #252525;
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .browser-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .browser-dot:nth-child(1) { background: #ff5f57; }
+  .browser-dot:nth-child(2) { background: #ffbd2e; }
+  .browser-dot:nth-child(3) { background: #28ca42; }
+
+  .browser-content { padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .browser-line { height: 8px; border-radius: 4px; background: #2e2e2e; }
+  .browser-line.accent { background: rgba(200,240,96,0.3); width: 40%; }
+  .browser-line.short { width: 60%; }
+  .browser-line.shorter { width: 45%; }
+
+  .portfolio-info {
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .portfolio-info h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.2rem; }
+  .portfolio-info p { font-size: 0.8rem; color: var(--muted); }
+
+  .portfolio-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: rgba(200,240,96,0.08);
+    border: 1px solid rgba(200,240,96,0.2);
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .portfolio-small { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .mini-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem 1.75rem;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: border-color 0.25s;
+  }
+
+  .mini-card:hover { border-color: rgba(200,240,96,0.25); }
+
+  .mini-icon {
+    width: 44px; height: 44px;
+    background: var(--surface2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .mini-card h3 { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.2rem; }
+  .mini-card p { font-size: 0.8rem; color: var(--muted); }
+
+  /* LEAD FORM */
+  .lead-section {
+    padding: 6rem 6%;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .lead-inner { max-width: 620px; margin: 0 auto; text-align: center; }
+
+  .lead-inner h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
+
+  .lead-inner h2 span { color: var(--accent); }
+  .lead-inner p { color: var(--muted); font-size: 0.95rem; margin-bottom: 2.5rem; }
+
+  .lead-form { display: flex; flex-direction: column; gap: 1rem; text-align: left; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .field label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: 0.5rem;
+  }
+
+  .field input,
+  .field select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .field input::placeholder { color: #444; }
+  .field select option { background: #1a1a1a; }
+  .field input:focus, .field select:focus { border-color: rgba(200,240,96,0.4); }
+
+  .btn-submit {
+    width: 100%;
+    background: var(--accent);
+    color: #111;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Syne', sans-serif;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 0.5rem;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-submit:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+  /* FINAL CTA */
+  .final-cta {
+    padding: 7rem 6%;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .final-cta h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    margin-bottom: 2.5rem;
+  }
+
+  .final-cta h2 span { color: var(--accent); }
+
+  .final-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.75rem 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.15rem; color: var(--white); }
+  .footer-logo span { color: var(--accent); }
+  .footer-copy { font-size: 0.8rem; color: #444; }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 5%; }
+    .btn-nav-ghost { display: none; }
+    .hero { padding: 4.5rem 5% 4rem; }
+    h1 { font-size: 2.6rem; }
+    .problem { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 5%; }
+    .services { padding: 4rem 5%; }
+    .services-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .portfolio { padding: 4rem 5%; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .lead-section { padding: 4rem 5%; }
+    .final-cta { padding: 5rem 5%; }
+    footer { padding: 1.5rem 5%; }
+    .section-divider { margin: 0 5%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="logo">KN<span>S</span></span>
+  <div class="nav-actions">
+    <a href="#services" class="btn-nav-ghost">Services</a>
+    <a href="#contact" class="btn-nav">Scale My Business</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Brand Growth Agency</div>
+  <h1>From existing business…<br>to <em>growing brand.</em></h1>
+  <p class="hero-sub">We help businesses scale online with websites and social media that actually bring in clients.</p>
+  <p class="hero-note">Most businesses either don't have a proper online presence or aren't getting results from it.</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-primary">Scale My Business</a>
+    <a href="https://wa.me/27600000000" target="_blank" class="btn-wa">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      WhatsApp Us
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider" />
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div>
+    <p class="problem-label">The Problem</p>
+    <h2>Most businesses are leaving money on the table.</h2>
+  </div>
+  <div class="problem-items">
+    <div class="problem-item">
+      <span class="problem-x">✕</span>
+      <p>Don't have a proper website that represents them</p>
+    </div>
+    <div class="problem-item">
+      <span class="problem-x">✕</span>
+      <p>Aren't getting clients from being online</p>
+    </div>
+    <div class="problem-item">
+      <span class="problem-x">✕</span>
+      <p>Rely too much on referrals to grow</p>
+    </div>
+    <div class="problem-fix">We fix that. →</div>
+  </div>
+</section>
+
+<hr class="section-divider" />
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <p class="section-label">What We Do</p>
+  <h2 class="section-title">Three ways we grow your brand.</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3>Website Design <span class="service-arrow">→</span></h3>
+      <p>Clean, modern sites built to convert visitors into paying customers. Not just good-looking — built to work.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3>Social Media <span class="service-arrow">→</span></h3>
+      <p>Content strategy and execution that builds attention, trust, and inbound leads from the right audience.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3>Brand Scaling <span class="service-arrow">→</span></h3>
+      <p>A full growth plan — helping you get consistent clients and turn your business into a recognisable brand.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider" />
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="work">
+  <p class="section-label">Our Work</p>
+  <h2 class="section-title">Built to convert.</h2>
+  <div class="portfolio-grid">
+    <div class="portfolio-card">
+      <div class="portfolio-preview">
+        <div class="preview-browser">
+          <div class="browser-bar">
+            <div class="browser-dot"></div>
+            <div class="browser-dot"></div>
+            <div class="browser-dot"></div>
+          </div>
+          <div class="browser-content">
+            <div class="browser-line accent"></div>
+            <div class="browser-line" style="width:80%; height:14px;"></div>
+            <div class="browser-line short"></div>
+            <div class="browser-line shorter"></div>
+            <div class="browser-line" style="width:35%; background: rgba(200,240,96,0.5); height:10px; border-radius:4px; margin-top:4px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-info">
+        <div>
+          <h3>KNS Demo Site</h3>
+          <p>Lead generation landing page</p>
+        </div>
+        <span class="portfolio-tag">Live Demo</span>
+      </div>
+    </div>
+    <div class="portfolio-small">
+      <div class="mini-card">
+        <div class="mini-icon">📱</div>
+        <div>
+          <h3>Social Media Content</h3>
+          <p>Branded posts & reels that drive engagement</p>
+        </div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-icon">📈</div>
+        <div>
+          <h3>Growth Strategy</h3>
+          <p>Custom plans built around your business goals</p>
+        </div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-icon">🎨</div>
+        <div>
+          <h3>Brand Identity</h3>
+          <p>Logos, colours, and visuals that stick</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD FORM -->
+<section class="lead-section" id="contact">
+  <div class="lead-inner">
+    <h2>Get a Free <span>Growth Plan</span></h2>
+    <p>Tell us about your business and we'll put together a free plan — no strings attached.</p>
+    <div class="lead-form">
+      <div class="form-row">
+        <div class="field">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" placeholder="Thabo" />
+        </div>
+        <div class="field">
+          <label for="biz">Business Name</label>
+          <input type="text" id="biz" placeholder="Mokoena Traders" />
+        </div>
+      </div>
+      <div class="field">
+        <label for="need">What do you need help with?</label>
+        <select id="need">
+          <option value="">Select an option…</option>
+          <option>Website Design</option>
+          <option>Social Media</option>
+          <option>Brand Scaling (Full Package)</option>
+          <option>Not sure — just need more clients</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="wa">WhatsApp Number</label>
+        <input type="tel" id="wa" placeholder="+27 60 000 0000" />
+      </div>
+      <button class="btn-submit" onclick="handleSubmit()">Get Started →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2>Ready to grow<br>your <span>business?</span></h2>
+  <div class="final-btns">
+    <a href="#contact" class="btn-primary">Scale My Business</a>
+    <a href="https://wa.me/27600000000" target="_blank" class="btn-wa">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      WhatsApp Us
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">KN<span>S</span></span>
+  <span class="footer-copy">© 2026 KNS. All rights reserved.</span>
+</footer>
+
+<script>
+  function handleSubmit() {
+    const name = document.getElementById('name').value.trim();
+    const biz = document.getElementById('biz').value.trim();
+    const wa = document.getElementById('wa').value.trim();
+    const need = document.getElementById('need').value;
+    if (!name || !biz || !wa) {
+      alert('Please fill in your name, business name, and WhatsApp number.');
+      return;
+    }
+    // ⚠️ Replace 27600000000 with your actual WhatsApp number (no + or spaces)
+    const msg = encodeURIComponent(`Hi KNS! My name is ${name} from ${biz}. I need help with: ${need || 'growing my business'}. Please send me a free growth plan.`);
+    window.open(`https://wa.me/27600000000?text=${msg}`, '_blank');
+  }
+</script>
+
+</body>
+</html>
