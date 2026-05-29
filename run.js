@@ -1,192 +1,122 @@
-// ========================================
-// KNS Website - Interactive Scripts
-// ========================================
+/* ============================================================
+   KNS — main.js
+   ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ========================================
-    // Navbar Scroll Effect
-    // ========================================
-    const navbar = document.getElementById('navbar');
-    let lastScroll = 0;
+  /* ── REVEAL ANIMATION (progressive enhancement) ── */
+  // Only hide elements if IntersectionObserver is supported
+  if ('IntersectionObserver' in window) {
+    document.body.classList.add('js-ready');
 
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const siblings = Array.from(entry.target.parentElement.children)
+              .filter(el => el.classList.contains('reveal'));
+            const idx = siblings.indexOf(entry.target);
+            entry.target.style.transitionDelay = `${idx * 0.09}s`;
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    // Small delay so page paint happens before we hide anything
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        revealEls.forEach(el => observer.observe(el));
+      });
+    });
+  }
+
+  /* ── STICKY NAV SHADOW ── */
+  const nav = document.querySelector('nav');
+  if (nav) {
     window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
+      nav.classList.toggle('scrolled', window.scrollY > 30);
+    }, { passive: true });
+  }
 
-        if (currentScroll > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
+  /* ── HAMBURGER MOBILE MENU ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
 
-        lastScroll = currentScroll;
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
     });
 
-    // ========================================
-    // Mobile Navigation Toggle - FIXED
-    // ========================================
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navMenu');
-    const navLinks = document.querySelectorAll('.nav-link');
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+  }
 
-    if (navToggle && navMenu) {
-        // Use both click and touchstart for mobile compatibility
-        const toggleMenu = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
+  /* ── FAQ ACCORDION ── */
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const btn = item.querySelector('.faq-question');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
 
-            navMenu.classList.toggle('active');
+  /* ── FORM SUBMIT → WHATSAPP ── */
+  const submitBtn = document.getElementById('submitBtn');
+  if (submitBtn) submitBtn.addEventListener('click', handleSubmit);
 
-            // Animate hamburger to X
-            const spans = navToggle.querySelectorAll('span');
-            if (navMenu.classList.contains('active')) {
-                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-                document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
-            } else {
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
-                document.body.style.overflow = ''; // Restore scrolling
-            }
-        };
+  function handleSubmit() {
+    const name  = (document.getElementById('name')?.value || '').trim();
+    const biz   = (document.getElementById('biz')?.value || '').trim();
+    const need  = document.getElementById('need')?.value || '';
+    const waNum = (document.getElementById('waInput')?.value || '').trim();
 
-        navToggle.addEventListener('click', toggleMenu);
-        navToggle.addEventListener('touchstart', toggleMenu, { passive: false });
+    if (!name || !biz || !waNum) {
+      showFormError('Please fill in your name, business name, and WhatsApp number.');
+      return;
     }
 
-    // Close mobile menu when clicking a link
-    navLinks.forEach(link => {
-        const closeMenu = () => {
-            navMenu.classList.remove('active');
-            const spans = navToggle.querySelectorAll('span');
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-            document.body.style.overflow = '';
-        };
+    const service = need || 'growing my business';
+    const msg = `Hi KNS! 👋\n\nMy name is *${name}* from *${biz}*.\n\nI need help with: *${service}*.\n\nMy WhatsApp: ${waNum}\n\nPlease send me a free growth plan!`;
 
-        link.addEventListener('click', closeMenu);
-        link.addEventListener('touchend', closeMenu);
-    });
+    // ⚠️ Replace with your real WhatsApp number (digits only, no + or spaces)
+    const KNS_WHATSAPP = '27600000000';
+    window.open(`https://wa.me/${KNS_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+  }
 
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (navMenu.classList.contains('active') && 
-            !navMenu.contains(e.target) && 
-            !navToggle.contains(e.target)) {
-            navMenu.classList.remove('active');
-            const spans = navToggle.querySelectorAll('span');
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-            document.body.style.overflow = '';
-        }
-    });
-
-    // ========================================
-    // Scroll Reveal Animation - FIXED: Only fade IN once
-    // ========================================
-    const fadeElements = document.querySelectorAll('.fade-in');
-    const revealedElements = new Set(); // Track which elements have been revealed
-
-    const revealOnScroll = () => {
-        const windowHeight = window.innerHeight;
-        const elementVisible = 100;
-
-        fadeElements.forEach((element) => {
-            // Skip if already revealed
-            if (revealedElements.has(element)) return;
-
-            const elementTop = element.getBoundingClientRect().top;
-
-            if (elementTop < windowHeight - elementVisible) {
-                element.classList.add('visible');
-                revealedElements.add(element); // Mark as revealed permanently
-            }
-        });
-    };
-
-    window.addEventListener('scroll', revealOnScroll);
-    // Trigger once on load
-    revealOnScroll();
-
-    // ========================================
-    // FAQ Accordion
-    // ========================================
-    const faqItems = document.querySelectorAll('.faq-item');
-
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-
-        if (question) {
-            const toggleFaq = (e) => {
-                e.preventDefault();
-
-                // Close other items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item && otherItem.classList.contains('active')) {
-                        otherItem.classList.remove('active');
-                    }
-                });
-
-                // Toggle current item
-                item.classList.toggle('active');
-            };
-
-            question.addEventListener('click', toggleFaq);
-            question.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                toggleFaq(e);
-            });
-        }
-    });
-
-    // ========================================
-    // Smooth Scroll for Anchor Links
-    // ========================================
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-
-            if (target) {
-                const headerOffset = 80;
-                const elementPosition = target.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
-    // ========================================
-    // Form Handling
-    // ========================================
-    const contactForm = document.querySelector('.contact-form');
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-
-            setTimeout(() => {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 3000);
-        });
+  function showFormError(msg) {
+    let err = document.getElementById('formError');
+    if (!err) {
+      err = document.createElement('p');
+      err.id = 'formError';
+      err.style.cssText = 'color:#e05555;font-size:0.85rem;margin-top:0.25rem;text-align:center;';
+      document.getElementById('submitBtn')?.insertAdjacentElement('beforebegin', err);
     }
+    err.textContent = msg;
+    setTimeout(() => { if (err) err.textContent = ''; }, 4000);
+  }
 
-    // ========================================
-    // Console Branding
-    // ========================================
-    console.log('%c KNS Agency ', 'background: #c9a84c; color: #0a0a0a; font-size: 24px; font-weight: bold; padding: 10px 20px; border-radius: 8px;');
-    console.log('%c Digital Growth For Modern Brands ', 'color: #c9a84c; font-size: 14px;');
+  /* ── SMOOTH SCROLL ── */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', e => {
+      const target = document.querySelector(anchor.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        const offset = (nav ? nav.offsetHeight : 70) + 16;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
 });
